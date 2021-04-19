@@ -3,7 +3,7 @@
     <h1>Znajomi</h1>
 
      <person-form @add:person="addPerson"/>
-    <persons-table :personsSource="persons"/>
+    <persons-table v-on:delete-person="deletePerson" :personsSource="persons"/>
   </div>
 </template>
 
@@ -32,7 +32,9 @@ export default {
         } catch (error) {
           console.error(error)
         }
-      }, 
+      },deletePerson(id) {
+      this.persons = this.persons.filter((person) => person.id !== id)
+        }, 
  }, mounted() {
     this.getPersons()
  }, 

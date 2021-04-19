@@ -10,9 +10,10 @@
             </thead>
             <tbody>
                 <tr v-for="person in personsSource" :key="person.id">
-                    <td>{{ person.name }}</td>
+                    <PersonItem v-on:delete-person="$emit('delete-person',person.id)" v-bind:person="person" v-bind:personsSource="personsSource"/>
+                   <!-- <td>{{ person.name }}</td>
                     <td>{{ person.email }}</td>
-                    <td>{{ person.phone }}</td>
+                    <td>{{ person.phone }}</td> -->
                 </tr>
             </tbody>
         </table>
@@ -20,11 +21,15 @@
 </template>
 
 <script>
+import PersonItem from '@/components/PersonItem.vue'
  export default {
      name: 'persons-table',
      props:{
          personsSource: Array,
      },
+     components:{
+         PersonItem
+    }
  }
 </script>
 
