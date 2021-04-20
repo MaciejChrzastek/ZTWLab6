@@ -3,6 +3,8 @@
     <div class="book-item">
       <p>
         {{ book.title }} <br />
+        {{ book.authorName }}<br />
+        {{ book.authorSurname }}<br />
         {{ book.authorId }}<br />
         {{ book.pages }}<br />
         <button @click="$emit('delete-book', book.id)" class="del">
@@ -12,11 +14,11 @@
       </p>
     </div>
 
-    <div v-if="this.flag">
+    <div id="book-update-form" v-if="this.flag">
       <form @submit.prevent="handleSubmit">
         <label>Tytuł</label>
         <input
-          v-model="boook.title"
+          v-model="updatedbook.title"
           type="text"
           :class="{ 'has-error': submitting && invalidTitle }"
           @focus="clearStatus"
@@ -24,14 +26,15 @@
         />
         <label>Autor ID</label>
         <input
-          v-model="book.authorId"
+          v-model="updatedbook.authorId"
           type="text"
           :class="{ 'has-error': submitting && invalidAuthorId }"
           @focus="clearStatus"
+          @keypress="clearStatus"
         />
         <label>Strony</label>
         <input
-          v-model="book.pages"
+          v-model="updatedbook.pages"
           type="text"
           :class="{ 'has-error': submitting && invalidPages }"
           @focus="clearStatus"
@@ -72,10 +75,12 @@ export default {
           const str = "http://127.0.0.1:8080/put/books/" + book.id;
 
           const requestOptions = {
-            method: "POST",
+            method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              book,
+              title: this.updatedbook.title,
+              authorId: this.updatedbook.authorId,
+              pages: this.updatedbook.pages
             }),
           };
           fetch(str, requestOptions);
