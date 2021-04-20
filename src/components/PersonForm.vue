@@ -1,7 +1,15 @@
 <template>
     <div id="person-form">
         <form @submit.prevent="handleSubmit">
-        <label>Imię i nazwisko</label>
+        <label>Id</label>
+        <input
+        v-model="person.id"
+        type="number"
+        :class="{ 'has-error': submitting }" 
+        @focus="clearStatus"
+        @keypress="clearStatus"
+        />
+        <label>Imię</label>
         <input
         v-model="person.name"
         type="text"
@@ -9,6 +17,15 @@
         @focus="clearStatus"
         @keypress="clearStatus"
         />
+        <label>Nazwisko</label>
+        <input
+        v-model="person.surname"
+        type="text"
+        :class="{ 'has-error': submitting && invalidSurname }" 
+        @focus="clearStatus"
+        @keypress="clearStatus"
+        />
+        <!--
         <label>Email</label>
         <input
         v-model="person.email"
@@ -24,6 +41,7 @@
         @focus="clearStatus"
         @keypress="clearStatus"
         />
+        -->
         <p v-if="error && submitting" class="error-message">
         Proszę wypełnić wskazane pola formularza
         </p>
@@ -43,9 +61,11 @@
                 error: false,
                 success: false, 
                 person: {
+                    id: 0,
                     name: '',
-                    email: '',
-                    phone: '',
+                    surname: ''
+                    //email: '',
+                    //phone: '',
                 },
             }
         },methods: {
@@ -53,7 +73,7 @@
                 this.submitting = true
                 this.clearStatus()
                 //check form fields
-                if (this.invalidName || this.invalidEmail || this.invalidPhone) {
+                if (this.invalidName || this.invalidSurname ){ //|| this.invalidEmail || this.invalidPhone) {
                     this.error = true
                     return
                 } 
@@ -62,9 +82,11 @@
 
                 //clear form fields
                 this.person = {
-                name: '',
-                email: '',
-                phone: '',
+                    id:0,
+                    name: '',
+                    surname: ''
+               // email: '',
+               // phone: '',
                 }
                 this.error = false
                 this.success = true
@@ -81,12 +103,16 @@
                     invalidName() {
                         return this.person.name === ''
                     },
+                    invalidSurname() {
+                        return this.person.surname === ''
+                    }, 
+                    /*
                     invalidEmail() {
                         return this.person.email === ''
                     },
                     invalidPhone() {
                         return this.person.phone === ''
-                    },
+                    },*/
                 }, 
 
     }
