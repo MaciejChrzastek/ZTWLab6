@@ -45,7 +45,16 @@ export default {
     addBook(book) {
       this.books = [...this.books, book];
       const str = "http://127.0.0.1:8080/post/books";
-      postData(str, book);
+      //postData(str, book);
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          book
+        }),
+      };
+      fetch(str, requestOptions)
+
       this.getBooks();
     },
     async getBooks() {
@@ -56,13 +65,13 @@ export default {
       } catch (error) {
         console.error(error);
       }
-    },
+    }, /*
     deleteBook(id) {
       this.books = this.books.filter((book) => book.id !== id);
       const str = "http://127.0.0.1:8080/books/" + book.id;
       postData(str, book);
       this.getBooks();
-    },
+    },*/
     async postData(url = "", data = {}) {
       // Default options are marked with *
       const response = await fetch(url, {
