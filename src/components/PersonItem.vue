@@ -17,8 +17,8 @@
 
     <div id="person-update-form" v-if="this.flag">
       <form @submit.prevent="handleSubmit">
-        <label>Id</label>
-        <p v-bind:value="person.id">person.id</p>
+        <!--<label>Id</label>
+        <p v-bind:value="person.id">person.id</p> -->
         <p>
           <label>Imię</label>
           <input
@@ -84,6 +84,33 @@ export default {
 
       //    this.$emit('update-person', this.person.id, this.updatedperson.name, this.updatedperson.surname )
 
+
+const str = "http://localhost:8080/put/authors/" + this.person.id;
+
+          const requestOptions = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: this.updatedperson.name,
+              surname: this.updatedperson.surname,
+            }),
+          };
+          fetch(str, requestOptions);
+      this.personsSource.filter((person) => {
+                    if(person.id == this.person.id){
+                        person.name = this.updatedperson.name
+                        person.surname = this.updatedperson.surname
+                        //person.phone = this.updatedperson.phone
+                        //person.email = this.updatedperson.email
+                    }
+      })    
+                
+          
+          //postData(str,book)
+        
+      
+
+/*
       const requestOptions = {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -106,7 +133,7 @@ export default {
       } catch (error) {
         console.error(error);
       }
-
+*/
 
 
       /*

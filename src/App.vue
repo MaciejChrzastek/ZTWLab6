@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="small-container">
-    <h1>Znajomi</h1>
+    <h1>Autorzy i Książki</h1>
 
     <book-form @add:book="addBook" />
     <!-- BOOK -->
@@ -50,7 +50,9 @@ export default {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          book
+          title: book.title,
+          authorId: book.authorId,
+          pages: book.pages
         }),
       };
       fetch(str, requestOptions)
@@ -65,13 +67,14 @@ export default {
       } catch (error) {
         console.error(error);
       }
-    }, /*
+    }, 
     deleteBook(id) {
-      this.books = this.books.filter((book) => book.id !== id);
-      const str = "http://127.0.0.1:8080/books/" + book.id;
-      postData(str, book);
+     // this.books = this.books.filter((book) => book.id !== id);
+      const str = "http://127.0.0.1:8080/books/" + id;
+      //postData(str, book);
+      fetch(str, { method: "DELETE" });
       this.getBooks();
-    },*/
+    },
     async postData(url = "", data = {}) {
       // Default options are marked with *
       const response = await fetch(url, {
@@ -119,7 +122,7 @@ export default {
     async deletePerson(id) {
       fetch("http://127.0.0.1:8080/authors/" + id, { method: "DELETE" });
       this.getPersons();
-      /*try {
+    /*  try {
         const response = await fetch("http://127.0.0.1:8080/get/authors"); //jsonplaceholder.typicode.com/users')
         const data = await response.json();
         this.persons = data;

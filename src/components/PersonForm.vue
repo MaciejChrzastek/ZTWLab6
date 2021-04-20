@@ -1,14 +1,14 @@
 <template>
     <div id="person-form">
         <form @submit.prevent="handleSubmit">
-        <label>Id</label>
+       <!-- <label>Id</label>
         <input
         v-model="person.id"
         type="number"
         :class="{ 'has-error': submitting }" 
         @focus="clearStatus"
         @keypress="clearStatus"
-        />
+        />-->
         <label>Imię</label>
         <input
         v-model="person.name"
@@ -48,7 +48,7 @@
         <p v-if="success" class="success-message">
         Dane poprawnie zapisano
         </p>
-        <button>Dodaj kontakt</button>
+        <button>Dodaj autora</button>
         </form>
     </div>
 </template>
