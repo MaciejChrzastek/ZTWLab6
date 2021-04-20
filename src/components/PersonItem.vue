@@ -1,18 +1,31 @@
 <template>
   <div class="container">
     <div class="person-item">
-      <p>
-        {{ person.id }} <br />
-        {{ person.name }} <br />
-        {{ person.surname }} <br />
-        <!--{{ person.email }}<br>
+      <table>
+        <tr>
+          <td style="width:25%">{{ person.id }}</td>
+          <td style="width:25%">{{ person.name }}</td>
+          <td style="width:25%">{{ person.surname }}</td>
+          <td style="width:25%">
+            <tr>
+              <button @click="update" class="update">UPDATE</button>
+            </tr>
+            <tr>
+              <br />
+            </tr>
+            <tr>
+              <button @click="$emit('delete-person', person.id)" class="del">
+                DELETE
+              </button>
+            </tr>
+          </td>
+        </tr>
+      </table>
+
+      <!--{{ person.email }}<br>
         {{ person.phone }}<br> -->
-        <button @click="$emit('delete-person', person.id)" class="del">
-          DELETE
-        </button>
-        <button @click="update" class="update">UPDATE</button>
-        <!--@click="update"-->
-      </p>
+
+      <!--@click="update"-->
     </div>
 
     <div id="person-update-form" v-if="this.flag">
@@ -84,33 +97,29 @@ export default {
 
       //    this.$emit('update-person', this.person.id, this.updatedperson.name, this.updatedperson.surname )
 
+      const str = "http://localhost:8080/put/authors/" + this.person.id;
 
-const str = "http://localhost:8080/put/authors/" + this.person.id;
-
-          const requestOptions = {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              name: this.updatedperson.name,
-              surname: this.updatedperson.surname,
-            }),
-          };
-          fetch(str, requestOptions);
+      const requestOptions = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: this.updatedperson.name,
+          surname: this.updatedperson.surname,
+        }),
+      };
+      fetch(str, requestOptions);
       this.personsSource.filter((person) => {
-                    if(person.id == this.person.id){
-                        person.name = this.updatedperson.name
-                        person.surname = this.updatedperson.surname
-                        //person.phone = this.updatedperson.phone
-                        //person.email = this.updatedperson.email
-                    }
-      })    
-                
-          
-          //postData(str,book)
-        
-      
+        if (person.id == this.person.id) {
+          person.name = this.updatedperson.name;
+          person.surname = this.updatedperson.surname;
+          //person.phone = this.updatedperson.phone
+          //person.email = this.updatedperson.email
+        }
+      });
 
-/*
+      //postData(str,book)
+
+      /*
       const requestOptions = {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -134,7 +143,6 @@ const str = "http://localhost:8080/put/authors/" + this.person.id;
         console.error(error);
       }
 */
-
 
       /*
                 this.personsSource.filter((person) => {
@@ -192,7 +200,7 @@ const str = "http://localhost:8080/put/authors/" + this.person.id;
 
 <style scoped>
 .person-item {
-  background: #f4f4f4;
+  background: #ffffff;
   padding: 10px;
   margin: 20px;
   border-bottom: 1px #ccc dotted;
@@ -203,22 +211,28 @@ const str = "http://localhost:8080/put/authors/" + this.person.id;
 }
 
 .del {
-  background: #ff0000;
+  background: #be2323;
   color: #fff;
   border: none;
   padding: 5px 9px;
-  border-radius: 50%;
+  width:90px;
+  border-radius: 10%;
   cursor: pointer;
   float: right;
 }
 .update {
-  background: darkgreen;
+  background: rgb(19, 165, 19);
   color: #fff;
   border: none;
   padding: 5px 9px;
-  border-radius: 50%;
+  width:90px;
+  border-radius: 10%;
   cursor: pointer;
   float: right;
+}
+
+td{
+  border-bottom: none;
 }
 </style>
 

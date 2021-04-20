@@ -1,17 +1,30 @@
 <template>
   <div class="container">
     <div class="book-item">
-      <p>
-        {{ book.title }} <br />
-        {{ book.authorName }}<br />
-        {{ book.authorSurname }}<br />
-        {{ book.authorId }}<br />
-        {{ book.pages }}<br />
+      
+        <table>
+        <tr>
+          <td style="width:18%">{{ book.title }}</td>
+          <td style="width:18%">{{ book.authorName }}</td>
+          <td style="width:18%">{{ book.authorSurname }}</td>
+          <td style="width:18%">{{ book.authorId }}</td>
+          <td style="width:18%">{{ book.pages }}</td>
+
+          <td style="width:18%">
+            <tr>
         <button @click="$emit('delete-book', book.id)" class="del">
           DELETE
         </button>
+        </tr>
+            <tr>
+              <br />
+            </tr>
+            <tr>
         <button @click="update" class="update">UPDATE</button>
-      </p>
+     </tr>
+          </td>
+        </tr>
+      </table>
     </div>
 
     <div id="book-update-form" v-if="this.flag">
@@ -84,6 +97,8 @@ export default {
             }),
           };
           fetch(str, requestOptions);
+
+         
           //postData(str,book)
         }
       });
@@ -157,23 +172,30 @@ export default {
 }
 
 .del {
-  background: #ff0000;
+  background: #be2323;
   color: #fff;
   border: none;
   padding: 5px 9px;
-  border-radius: 50%;
+  width:90px;
+  border-radius: 10%;
   cursor: pointer;
   float: right;
 }
 .update {
-  background: darkgreen;
+  background:  rgb(19, 165, 19);
   color: #fff;
   border: none;
   padding: 5px 9px;
-  border-radius: 50%;
+  width:90px;
+  border-radius: 10%;
   cursor: pointer;
   float: right;
 }
+
+td{
+  border-bottom: none;
+}
+
 </style>
 
 

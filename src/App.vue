@@ -1,12 +1,25 @@
 <template>
   <div id="app" class="small-container">
-    <h1>Autorzy i Książki</h1>
-
+    <h1 style="text-align: center">Książki i Autorzy</h1>
+    <p></p>
+    <h2 style="text-align: center; background-color: rgb(193, 240, 252)">
+      <hr style="border-color: white" />
+      Książki
+      <hr style="border-color: white" />
+    </h2>
+    <p></p>
     <book-form @add:book="addBook" />
     <!-- BOOK -->
     <books-table v-on:delete-book="deleteBook" :booksSource="books" />
     <!-- BOOK -->
 
+    <p></p>
+    <h2 style="text-align: center; background-color: rgb(193, 240, 252)">
+      <hr style="border-color: white" />
+      Autorzy
+      <hr style="border-color: white" />
+    </h2>
+    <p></p>
     <person-form @add:person="addPerson" />
     <!-- AUTHOR -->
     <persons-table v-on:delete-person="deletePerson" :personsSource="persons" />
@@ -52,10 +65,10 @@ export default {
         body: JSON.stringify({
           title: book.title,
           authorId: book.authorId,
-          pages: book.pages
+          pages: book.pages,
         }),
       };
-      fetch(str, requestOptions)
+      fetch(str, requestOptions);
 
       this.getBooks();
     },
@@ -67,9 +80,9 @@ export default {
       } catch (error) {
         console.error(error);
       }
-    }, 
+    },
     deleteBook(id) {
-     // this.books = this.books.filter((book) => book.id !== id);
+      // this.books = this.books.filter((book) => book.id !== id);
       const str = "http://127.0.0.1:8080/books/" + id;
       //postData(str, book);
       fetch(str, { method: "DELETE" });
@@ -92,8 +105,6 @@ export default {
       });
       return response.json(); // parses JSON response into native JavaScript objects
     },
-
-
 
     /******************** AUTHOR  ********************/
 
@@ -122,7 +133,7 @@ export default {
     async deletePerson(id) {
       fetch("http://127.0.0.1:8080/authors/" + id, { method: "DELETE" });
       this.getPersons();
-    /*  try {
+      /*  try {
         const response = await fetch("http://127.0.0.1:8080/get/authors"); //jsonplaceholder.typicode.com/users')
         const data = await response.json();
         this.persons = data;
